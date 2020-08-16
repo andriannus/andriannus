@@ -1,7 +1,1 @@
-```bash
-git clone https://github.com/andriannus
-cd andriannus
-npm run dev
-```
-
-### Hello World!
+![Cover](https://github.com/andriannus/andriannus/blob/master/andre-simamora.png)
