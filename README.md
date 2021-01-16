@@ -4,15 +4,26 @@
 
 ## About Me
 
-```javascript
+```typescript
 import { defineComponent, onMounted, reactive } from "vue";
+
+interface AboutMeState {
+  currentWorkplace: CurrentWorkplace;
+  dailyKnowledges: string[];
+  fullName: string;
+}
+
+interface CurrentWorkplace {
+  company: string;
+  position: string;
+}
 
 export default defineComponent({
   name: "AboutMe",
 
   setup() {
-    const state = reactive({
-      currentWorkplace: {},
+    const state = reactive<AboutMeState>({
+      currentWorkplace: {} as CurrentWorkplace,
       dailyKnowledges: [],
       fullName: "",
     });
@@ -23,18 +34,18 @@ export default defineComponent({
       setCurrentWorkplace();
     });
 
-    const setFullName = () => {
+    function setFullName(): void {
       state.fullName = "Andriannus Parasian";
     };
 
-    const setCurrentWorkplace = () => {
+    function setCurrentWorkplace(): void {
       state.currentWorkplace = {
         company: "Qoala",
         position: "Software Engineer (Front-end)",
       };
     };
 
-    const setDailyKnowledges = () => {
+    function setDailyKnowledges(): void {
       state.dailyKnowledges = [
         "TypeScript",
         "JavaScript",
