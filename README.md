@@ -5,62 +5,75 @@
 ## About Me
 
 ```typescript
-import { defineComponent, onMounted, reactive } from "vue";
-
-interface AboutMeState {
-  currentWorkplace: CurrentWorkplace;
-  dailyKnowledges: string[];
-  fullName: string;
-}
+import { useEffect, useState } from 'react';
 
 interface CurrentWorkplace {
   company: string;
   position: string;
 }
 
-export default defineComponent({
-  name: "AboutMe",
+interface AboutMeState {
+  currentWorkplace: CurrentWorkplace;
+  dailyKnowledge: string[];
+  fullName: string;
+}
 
-  setup() {
-    const state = reactive<AboutMeState>({
-      currentWorkplace: {} as CurrentWorkplace,
-      dailyKnowledges: [],
-      fullName: "",
+interface AboutMeHook {
+  aboutMe: AboutMeState;
+}
+
+export default function useAboutMe(): AboutMeHook {
+  const [aboutMe, setAboutMe] = useState<AboutMeState>({
+    currentWorkplace: {} as CurrentWorkplace,
+    dailyKnowledge: [],
+    fullName: ''
+  });
+
+  useEffect(() => {
+    setFullName();
+    setDailyKnowledge();
+    setCurrentWorkplace();
+  }, []);
+
+  function setFullName(): void {
+    setAboutMe({
+      ...aboutMe,
+      fullName: 'Andriannus Parasian'
     });
+  }
 
-    onMounted(() => {
-      setFullName();
-      setDailyKnowledges();
-      setCurrentWorkplace();
+  function setCurrentWorkplace(): void {
+    setAboutMe({
+      ...aboutMe,
+      currentWorkplace: {
+        company: 'Qoala',
+        position: 'Software Engineer (Front-end)'
+      }
     });
+  }
 
-    function setFullName(): void {
-      state.fullName = "Andriannus Parasian";
-    };
+  function setDailyKnowledge(): void {
+    setAboutMe({
+      ...aboutMe,
+      dailyKnowledge: [
+        'JavaScript',
+        'TypeScript',
+        'React.js',
+        'Vue',
+        'Angular',
+        'AJAX',
+        'CSS Preprocessor',
+        'Unit Test',
+        'E2E Test',
+        'Git',
+        'JIRA/ClickUp'
+      ]
+    });
+  }
 
-    function setCurrentWorkplace(): void {
-      state.currentWorkplace = {
-        company: "Qoala",
-        position: "Software Engineer (Front-end)",
-      };
-    };
+  return { aboutMe };
+}
 
-    function setDailyKnowledges(): void {
-      state.dailyKnowledges = [
-        "TypeScript",
-        "JavaScript",
-        "Angular",
-        "Vue",
-        "AJAX",
-        "CSS Preprocessor",
-        "Jasmine",
-        "Karma",
-      ];
-    };
-
-    return { state };
-  },
-});
 ```
 
 ### Connect with me
