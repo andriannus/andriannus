@@ -46,8 +46,8 @@ export default function useAboutMe(): AboutMeHook {
     setAboutMe({
       ...aboutMe,
       currentWorkplace: {
-        company: 'Qoala',
-        position: 'Software Engineer (Front-end)'
+        company: 'eFishery',
+        position: 'Frontend Engineer'
       }
     });
   }
