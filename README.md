@@ -5,7 +5,7 @@
 ## About Me
 
 ```typescript
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 interface CurrentWorkplace {
   company: string;
@@ -13,7 +13,7 @@ interface CurrentWorkplace {
 }
 
 interface AboutMeState {
-  currentWorkplace: CurrentWorkplace;
+  currentWorkplace: Partial<CurrentWorkplace>;
   dailyKnowledge: string[];
   fullName: string;
 }
@@ -24,25 +24,19 @@ interface AboutMeHook {
 
 export default function useAboutMe(): AboutMeHook {
   const [aboutMe, setAboutMe] = useState<AboutMeState>({
-    currentWorkplace: {} as CurrentWorkplace,
+    currentWorkplace: {},
     dailyKnowledge: [],
     fullName: ''
   });
 
-  useEffect(() => {
-    setFullName();
-    setDailyKnowledge();
-    setCurrentWorkplace();
-  }, []);
-
-  function setFullName(): void {
+  const setFullName = useCallback(() => {
     setAboutMe({
       ...aboutMe,
       fullName: 'Andriannus Parasian'
     });
-  }
+  }, [aboutMe]);
 
-  function setCurrentWorkplace(): void {
+  const setCurrentWorkplace = useCallback(() => {
     setAboutMe({
       ...aboutMe,
       currentWorkplace: {
@@ -50,9 +44,9 @@ export default function useAboutMe(): AboutMeHook {
         position: 'Frontend Engineer'
       }
     });
-  }
+  }, [aboutMe]);
 
-  function setDailyKnowledge(): void {
+  const setDailyKnowledge = useCallback(() => {
     setAboutMe({
       ...aboutMe,
       dailyKnowledge: [
@@ -69,7 +63,13 @@ export default function useAboutMe(): AboutMeHook {
         'JIRA/ClickUp'
       ]
     });
-  }
+  }, [aboutMe]);
+
+  useEffect(() => {
+    setFullName();
+    setDailyKnowledge();
+    setCurrentWorkplace();
+  }, [setFullName, setDailyKnowledge, setCurrentWorkplace]);
 
   return { aboutMe };
 }
