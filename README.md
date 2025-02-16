@@ -25,7 +25,7 @@ type UseAboutMe = {
 export function useAboutMe(): UseAboutMe {
   const [aboutMe, setAboutMe] = useState<AboutMeState>({
     currentWorkplace: {},
-    fullName: ''
+    fullName: '',
     skills: [],
   });
 
