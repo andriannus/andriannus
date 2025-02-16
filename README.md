@@ -7,49 +7,49 @@
 ```typescript
 import { useCallback, useEffect, useState } from 'react';
 
-interface CurrentWorkplace {
+type CurrentWorkplace = {
   company: string;
   position: string;
 }
 
-interface AboutMeState {
+type AboutMeState = {
   currentWorkplace: Partial<CurrentWorkplace>;
-  dailyKnowledge: string[];
   fullName: string;
+  skills: string[];
 }
 
-interface AboutMeHook {
+type UseAboutMe = {
   aboutMe: AboutMeState;
 }
 
-export default function useAboutMe(): AboutMeHook {
+export function useAboutMe(): UseAboutMe {
   const [aboutMe, setAboutMe] = useState<AboutMeState>({
     currentWorkplace: {},
-    dailyKnowledge: [],
     fullName: ''
+    skills: [],
   });
 
   const setFullName = useCallback(() => {
-    setAboutMe({
-      ...aboutMe,
+    setAboutMe((prevState) => ({
+      ...prevState,
       fullName: 'Andriannus Parasian'
-    });
-  }, [aboutMe]);
+    }));
+  }, []);
 
   const setCurrentWorkplace = useCallback(() => {
-    setAboutMe({
-      ...aboutMe,
+    setAboutMe((prevState) => ({
+      ...prevState,
       currentWorkplace: {
-        company: 'eFishery',
-        position: 'Frontend Engineer'
+        company: 'N/A',
+        position: 'N/A'
       }
-    });
-  }, [aboutMe]);
+    }));
+  }, []);
 
-  const setDailyKnowledge = useCallback(() => {
-    setAboutMe({
-      ...aboutMe,
-      dailyKnowledge: [
+  const setSkills = useCallback(() => {
+    setAboutMe((prevState) => ({
+      ...prevState,
+      skills: [
         'JavaScript',
         'TypeScript',
         'React.js',
@@ -62,14 +62,14 @@ export default function useAboutMe(): AboutMeHook {
         'Git',
         'JIRA/ClickUp'
       ]
-    });
-  }, [aboutMe]);
+    }));
+  }, []);
 
   useEffect(() => {
     setFullName();
-    setDailyKnowledge();
     setCurrentWorkplace();
-  }, [setFullName, setDailyKnowledge, setCurrentWorkplace]);
+    setSkills();
+  }, [setFullName, setCurrentWorkplace, setSkills]);
 
   return { aboutMe };
 }
